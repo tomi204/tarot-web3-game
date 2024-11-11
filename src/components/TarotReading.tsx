@@ -1,13 +1,15 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { TarotCard } from './TarotCard';
-import { tarotCards } from '../data/tarotCards';
-import { Sparkles, BookOpen } from 'lucide-react';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { TarotCard } from "./TarotCard";
+import { tarotCards } from "../data/tarotCards";
+import { Sparkles, BookOpen } from "lucide-react";
+import { useAppKitAccount, useWalletInfo } from "@reown/appkit/react";
 
 export const TarotReading = () => {
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [showInfo, setShowInfo] = useState(false);
+  const { address } = useAppKitAccount();
 
   const handleCardClick = (index: number) => {
     if (selectedCards.includes(index)) {
@@ -25,23 +27,47 @@ export const TarotReading = () => {
   };
 
   const getReadingInterpretation = () => {
-    const selectedTarotCards = selectedCards.map(index => tarotCards[index]);
+    const selectedTarotCards = selectedCards.map((index) => tarotCards[index]);
     const positions = [
       "Past - This position represents influences from your past:",
       "Present - This position shows your current situation:",
-      "Future - This position indicates potential outcomes:"
+      "Future - This position indicates potential outcomes:",
     ];
 
     const combinedMeaning = `
-      The combination of ${selectedTarotCards.map(card => card.name).join(', ')} suggests 
-      ${selectedTarotCards[0].arcana === 'major' ? 'significant life changes' : 'day-to-day developments'} 
+      The combination of ${selectedTarotCards
+        .map((card) => card.name)
+        .join(", ")} suggests 
+      ${
+        selectedTarotCards[0].arcana === "major"
+          ? "significant life changes"
+          : "day-to-day developments"
+      } 
       in your journey. This spread indicates 
-      ${selectedTarotCards.some(card => card.suit === 'cups') ? 'emotional matters' : ''}
-      ${selectedTarotCards.some(card => card.suit === 'wands') ? 'creative or spiritual growth' : ''}
-      ${selectedTarotCards.some(card => card.suit === 'swords') ? 'mental challenges' : ''}
-      ${selectedTarotCards.some(card => card.suit === 'pentacles') ? 'material concerns' : ''}
+      ${
+        selectedTarotCards.some((card) => card.suit === "cups")
+          ? "emotional matters"
+          : ""
+      }
+      ${
+        selectedTarotCards.some((card) => card.suit === "wands")
+          ? "creative or spiritual growth"
+          : ""
+      }
+      ${
+        selectedTarotCards.some((card) => card.suit === "swords")
+          ? "mental challenges"
+          : ""
+      }
+      ${
+        selectedTarotCards.some((card) => card.suit === "pentacles")
+          ? "material concerns"
+          : ""
+      }
       are particularly relevant to your question.
-    `.replace(/\s+/g, ' ').trim();
+    `
+      .replace(/\s+/g, " ")
+      .trim();
 
     return { positions, combinedMeaning };
   };
@@ -54,15 +80,21 @@ export const TarotReading = () => {
         className="max-w-7xl mx-auto"
       >
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4 flex items-center justify-center gap-2">
-            <Sparkles className="w-8 h-8" />
-            Daily Tarot Reading
-            <Sparkles className="w-8 h-8" />
+          <h1 className="text-4xl font-bold text-white mb-4 flex flex-col items-center justify-center w-screen gap-2">
+            <div className="flex items-center justify-center gap-2">
+              <Sparkles className="w-8 h-8" />
+              Daily Tarot Reading
+              <Sparkles className="w-8 h-8" />
+            </div>
+            {!address && <w3m-connect-button />}
+            <w3m-account-button />
           </h1>
           <p className="text-purple-200 mb-4">
-            {selectedCards.length < 3 
-              ? `Select ${3 - selectedCards.length} more card${selectedCards.length === 2 ? '' : 's'} to reveal your reading`
-              : 'Your reading is ready to be revealed'}
+            {selectedCards.length < 3
+              ? `Select ${3 - selectedCards.length} more card${
+                  selectedCards.length === 2 ? "" : "s"
+                } to reveal your reading`
+              : "Your reading is ready to be revealed"}
           </p>
           <button
             onClick={handleNewReading}
@@ -73,16 +105,16 @@ export const TarotReading = () => {
         </div>
 
         {selectedCards.length < 3 ? (
-          <motion.div 
+          <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center"
             variants={{
               hidden: { opacity: 0 },
               show: {
                 opacity: 1,
                 transition: {
-                  staggerChildren: 0.1
-                }
-              }
+                  staggerChildren: 0.1,
+                },
+              },
             }}
             initial="hidden"
             animate="show"
@@ -92,9 +124,9 @@ export const TarotReading = () => {
                 key={card.name}
                 variants={{
                   hidden: { opacity: 0, y: 50 },
-                  show: { opacity: 1, y: 0 }
+                  show: { opacity: 1, y: 0 },
                 }}
-                className={selectedCards.includes(index) ? 'opacity-50' : ''}
+                className={selectedCards.includes(index) ? "opacity-50" : ""}
               >
                 <TarotCard
                   card={card}
@@ -106,16 +138,16 @@ export const TarotReading = () => {
           </motion.div>
         ) : (
           <>
-            <motion.div 
+            <motion.div
               className="flex flex-wrap justify-center gap-8"
               variants={{
                 hidden: { opacity: 0 },
                 show: {
                   opacity: 1,
                   transition: {
-                    staggerChildren: 0.3
-                  }
-                }
+                    staggerChildren: 0.3,
+                  },
+                },
               }}
               initial="hidden"
               animate="show"
@@ -125,7 +157,7 @@ export const TarotReading = () => {
                   key={tarotCards[cardIndex].name}
                   variants={{
                     hidden: { opacity: 0, y: 50 },
-                    show: { opacity: 1, y: 0 }
+                    show: { opacity: 1, y: 0 },
                   }}
                 >
                   <TarotCard
@@ -147,17 +179,19 @@ export const TarotReading = () => {
                 className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors flex items-center gap-2 mx-auto"
               >
                 <BookOpen className="w-5 h-5" />
-                {showInfo ? 'Hide' : 'Reveal'} Complete Reading
+                {showInfo ? "Hide" : "Reveal"} Complete Reading
               </button>
-              
+
               {showInfo && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="mt-8 p-8 bg-white/10 backdrop-blur-sm rounded-xl text-white max-w-4xl mx-auto"
                 >
-                  <h2 className="text-3xl font-bold mb-8 text-purple-100">Your Complete Reading</h2>
-                  
+                  <h2 className="text-3xl font-bold mb-8 text-purple-100">
+                    Your Complete Reading
+                  </h2>
+
                   <div className="space-y-8">
                     {selectedCards.map((cardIndex, index) => (
                       <motion.div
@@ -171,11 +205,21 @@ export const TarotReading = () => {
                           {getReadingInterpretation().positions[index]}
                         </h3>
                         <div className="space-y-3">
-                          <p className="text-lg font-semibold text-white">{tarotCards[cardIndex].name}</p>
-                          <p className="text-purple-200">{tarotCards[cardIndex].desc}</p>
+                          <p className="text-lg font-semibold text-white">
+                            {tarotCards[cardIndex].name}
+                          </p>
+                          <p className="text-purple-200">
+                            {tarotCards[cardIndex].desc}
+                          </p>
                           <div className="mt-4">
-                            <p className="text-green-300">✨ Upright Meaning: {tarotCards[cardIndex].meaning_up}</p>
-                            <p className="text-red-300 mt-2">🔄 Reversed Meaning: {tarotCards[cardIndex].meaning_rev}</p>
+                            <p className="text-green-300">
+                              ✨ Upright Meaning:{" "}
+                              {tarotCards[cardIndex].meaning_up}
+                            </p>
+                            <p className="text-red-300 mt-2">
+                              🔄 Reversed Meaning:{" "}
+                              {tarotCards[cardIndex].meaning_rev}
+                            </p>
                           </div>
                         </div>
                       </motion.div>
@@ -187,7 +231,9 @@ export const TarotReading = () => {
                       transition={{ delay: 0.6 }}
                       className="mt-8 p-6 bg-purple-900/50 rounded-lg"
                     >
-                      <h3 className="text-2xl font-bold mb-4 text-purple-100">Combined Interpretation</h3>
+                      <h3 className="text-2xl font-bold mb-4 text-purple-100">
+                        Combined Interpretation
+                      </h3>
                       <p className="text-lg text-purple-200 leading-relaxed">
                         {getReadingInterpretation().combinedMeaning}
                       </p>
