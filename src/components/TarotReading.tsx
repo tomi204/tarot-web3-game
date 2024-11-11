@@ -80,14 +80,13 @@ export const TarotReading = () => {
         className="max-w-7xl mx-auto"
       >
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4 flex flex-col items-center justify-center w-screen gap-2">
+          <h1 className="text-4xl font-bold text-white mb-4 flex flex-col items-center justify-center gap-2">
             <div className="flex items-center justify-center gap-2">
               <Sparkles className="w-8 h-8" />
               Daily Tarot Reading
               <Sparkles className="w-8 h-8" />
             </div>
-            {!address && <w3m-connect-button />}
-            <w3m-account-button />
+            {!address ? <w3m-connect-button /> : <w3m-account-button />}
           </h1>
           <p className="text-purple-200 mb-4">
             {selectedCards.length < 3
