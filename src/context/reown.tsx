@@ -1,12 +1,12 @@
 import { createAppKit } from "@reown/appkit/react";
 import { EthersAdapter } from "@reown/appkit-adapter-ethers";
-import { sepolia } from "viem/chains";
+import { baseSepolia } from "viem/chains";
 import { REOWN_PROJECT_ID } from "../constants";
 // 1. Get projectId
 const projectId = REOWN_PROJECT_ID;
 
 // 2. Set the networks
-const networks = [sepolia];
+const networks = [baseSepolia];
 
 // 3. Create a metadata object - optional
 const metadata = {

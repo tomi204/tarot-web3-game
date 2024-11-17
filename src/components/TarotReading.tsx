@@ -3,13 +3,21 @@ import { motion } from "framer-motion";
 import { TarotCard } from "./TarotCard";
 import { tarotCards } from "../data/tarotCards";
 import { Sparkles, BookOpen } from "lucide-react";
-import { useAppKitAccount, useWalletInfo } from "@reown/appkit/react";
-
+import { useAppKitAccount, useAppKitProvider } from "@reown/appkit/react";
+import { Provider } from "@reown/appkit-adapter-ethers";
+import MintButton from "./MintButton";
+import {
+  THE_MAGICIAN_URI,
+  THE_DEATH_URI,
+  THE_FOOL_URI,
+  CARRIAGE_URI,
+} from "../constants/URI";
 export const TarotReading = () => {
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [showInfo, setShowInfo] = useState(false);
   const { address } = useAppKitAccount();
+  const { walletProvider } = useAppKitProvider<Provider>("eip155");
 
   const handleCardClick = (index: number) => {
     if (selectedCards.includes(index)) {
@@ -72,6 +80,19 @@ export const TarotReading = () => {
     return { positions, combinedMeaning };
   };
 
+  const actualCards = selectedCards.map((index) => tarotCards[index]);
+  const actualBaseUri = () => {
+    if (actualCards.includes(tarotCards[0])) {
+      return THE_MAGICIAN_URI;
+    }
+    if (actualCards.includes(tarotCards[1])) {
+      return THE_DEATH_URI;
+    }
+    if (actualCards.includes(tarotCards[2])) {
+      return THE_FOOL_URI;
+    }
+    return CARRIAGE_URI;
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-900 p-8">
       <motion.div
@@ -238,6 +259,14 @@ export const TarotReading = () => {
                       </p>
                     </motion.div>
                   </div>
+                  <MintButton
+                    provider={walletProvider}
+                    onMint={() => {}}
+                    baseURI={actualBaseUri()}
+                    name={actualCards.map((card) => card.name).join(", ")}
+                    symbol={actualCards.map((card) => card.name).join(", ")}
+                    price={0.01}
+                  />
                 </motion.div>
               )}
             </motion.div>

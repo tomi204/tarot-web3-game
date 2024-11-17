@@ -1,0 +1,27 @@
+{
+  "name": "The Devil",
+  "description": "The Devil card in the Adventure Time Tarot represents addiction, control, and limitations. It challenges you to recognize unhealthy patterns and regain your personal power.",
+  "image": "ipfs://QmPPPAZu7FZ4te7M5X5wnE2gW9zLk5kuo4t2qSqwpvjQhe/THE%20DEVIL.png",
+  "attributes": [
+    {
+      "trait_type": "Orientation",
+      "value": "Upright"
+    },
+    {
+      "trait_type": "Meaning",
+      "value": "Addiction, control, materialism, restriction, and temptation."
+    },
+    {
+      "trait_type": "Reversed Orientation",
+      "value": "Reversed"
+    },
+    {
+      "trait_type": "Reversed Meaning",
+      "value": "Breaking free, self-awareness, overcoming addiction, reclaiming power."
+    },
+    {
+      "trait_type": "Advice",
+      "value": "Identify the chains holding you back. You have the strength to break free and reclaim your autonomy."
+    }
+  ]
+}

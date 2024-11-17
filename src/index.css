@@ -11,4 +11,7 @@
   body {
     @apply antialiased;
   }
+  :root {
+    --radius: 0.5rem;
+  }
 }
