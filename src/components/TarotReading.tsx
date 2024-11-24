@@ -12,11 +12,12 @@ import {
   THE_FOOL_URI,
   CARRIAGE_URI,
 } from "../constants/URI";
+import { useAuth } from "../context/AuthContext";
+import Navbar from "./navbar";
 export const TarotReading = () => {
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [showInfo, setShowInfo] = useState(false);
-  const { address } = useAppKitAccount();
   const { walletProvider } = useAppKitProvider<Provider>("eip155");
 
   const handleCardClick = (index: number) => {
@@ -107,7 +108,7 @@ export const TarotReading = () => {
               Daily Tarot Reading
               <Sparkles className="w-8 h-8" />
             </div>
-            {!address ? <w3m-connect-button /> : <w3m-account-button />}
+            <Navbar />
           </h1>
           <p className="text-purple-200 mb-4">
             {selectedCards.length < 3
