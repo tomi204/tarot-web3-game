@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dfinity/agent": "^2.1.3",
+    "@dfinity/auth-client": "^2.1.3",
     "@radix-ui/react-toast": "^1.2.2",
     "@reown/appkit": "^1.3.2",
     "@reown/appkit-adapter-ethers": "^1.3.2",
