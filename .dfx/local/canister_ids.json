@@ -1,0 +1,14 @@
+{
+  "backend": {
+    "local": "bw4dl-smaaa-aaaaa-qaacq-cai"
+  },
+  "frontend": {
+    "local": "b77ix-eeaaa-aaaaa-qaada-cai"
+  },
+  "ic_eth": {
+    "local": "by6od-j4aaa-aaaaa-qaadq-cai"
+  },
+  "internet_identity": {
+    "local": "avqkn-guaaa-aaaaa-qaaea-cai"
+  }
+}
