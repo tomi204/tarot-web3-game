@@ -10,8 +10,17 @@
 @layer base {
   body {
     @apply antialiased;
+    background: linear-gradient(to bottom right, #0C1D2D, #425492, #306A9A);
+    background-size: 200% 200%; 
+    animation: gradient-bg 6s ease infinite;
   }
-  :root {
+   :root {
     --radius: 0.5rem;
+  }
+}
+
+@layer utilities {
+  .animate-gradient {
+    background-size: 200% 200%;
   }
 }

@@ -10,13 +10,13 @@ interface Props {
 export const TarotCard: React.FC<Props> = ({ card, isFlipped, onClick }) => {
   return (
     <motion.div
-      className="relative w-64 h-96 cursor-pointer"
+      className="relative w-64 h-96 cursor-pointer shadow-xl"
       onClick={onClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
       <motion.div
-        className="absolute w-full h-full rounded-xl shadow-xl"
+        className="absolute w-full h-full rounded-xl shadow-xl "
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.6 }}
         style={{ transformStyle: 'preserve-3d' }}

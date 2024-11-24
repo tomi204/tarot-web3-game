@@ -9,7 +9,20 @@ export default {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-  		colors: {}
+  		colors: {
+			'custom-blue-dark': '#0C1D2D',
+			'custom-blue-medium': '#425492',
+			'custom-blue-light': '#306A9A',
+		},
+		animation: {
+			gradient: 'gradient 6s ease infinite',
+		  },
+		keyframes: {
+			gradient: {
+			'0%, 100%': { backgroundPosition: '0% 50%' },
+			'50%': { backgroundPosition: '100% 50%' },
+			},
+		},
   	}
   },
   plugins: [require("tailwindcss-animate")],

@@ -30,6 +30,10 @@ export const TarotReading = () => {
     }
   };
 
+  const getRandomRotation = () => {
+    return `rotate(${Math.random() * 20 - 10}deg)`; // Rotación aleatoria entre -10° y 10°
+  };
+
   const handleNewReading = () => {
     window.location.reload();
   };
@@ -94,20 +98,22 @@ export const TarotReading = () => {
     return CARRIAGE_URI;
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-900 p-8">
+    <div className="min-h-screen  p-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-7xl mx-auto"
       >
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 mt-32" >
           <h1 className="text-4xl font-bold text-white mb-4 flex flex-col items-center justify-center gap-2">
             <div className="flex items-center justify-center gap-2">
               <Sparkles className="w-8 h-8" />
-              Daily Tarot Reading
+              What do you want to know?
               <Sparkles className="w-8 h-8" />
             </div>
-            {!address ? <w3m-connect-button /> : <w3m-account-button />}
+            <p>
+            Write or think your specific question and choose the category...
+            </p>
           </h1>
           <p className="text-purple-200 mb-4">
             {selectedCards.length < 3
@@ -124,29 +130,59 @@ export const TarotReading = () => {
           </button>
         </div>
 
+        <div className="flex justify-center mt-8 gap-10 mb-12">
+          <div className="flex flex-col items-center bg-white border border-black p-6 rounded-lg shadow-md w-[400px]">
+            <h2 className="font-bold text-lg mb-4">Spread Type:</h2>
+            <p className="text-sm text-gray-800">
+              Past, Present & Future
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center bg-white border border-black p-6 rounded-lg shadow-md w-[400px]">
+            <h2 className="font-bold text-lg mb-4">Category:</h2>
+            <p className="text-sm text-gray-800">
+              Love, Health or Work
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center bg-white border border-black p-6 rounded-lg shadow-md w-[400px]">
+            <h2 className="font-bold text-lg mb-4">Your Name:</h2>
+            <p className="text-sm text-gray-800">
+              Posibles resultados
+            </p>
+          </div>
+        </div>
+
+
         {selectedCards.length < 3 ? (
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center"
-            variants={{
-              hidden: { opacity: 0 },
-              show: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.1,
-                },
+          className="relative"
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1,
               },
-            }}
-            initial="hidden"
-            animate="show"
-          >
-            {tarotCards.map((card, index) => (
+            },
+          }}
+          initial="hidden"
+          animate="show"
+        >
+          <div className="grid grid-cols-11 gap-4 ">
+            {tarotCards.slice(0, 11).map((card, index) => (
               <motion.div
                 key={card.name}
                 variants={{
                   hidden: { opacity: 0, y: 50 },
                   show: { opacity: 1, y: 0 },
                 }}
-                className={selectedCards.includes(index) ? "opacity-50" : ""}
+                style={{
+                  transform: `rotate(${Math.random() * 20 - 10}deg)`,
+                }}
+                className={`relative ${
+                  selectedCards.includes(index) ? "opacity-50" : ""
+                }`}
               >
                 <TarotCard
                   card={card}
@@ -155,7 +191,32 @@ export const TarotReading = () => {
                 />
               </motion.div>
             ))}
-          </motion.div>
+          </div>
+      
+          <div className="grid grid-cols-11 gap-4 absolute top-36 ">
+            {tarotCards.slice(11, 22).map((card, index) => (
+              <motion.div
+                key={card.name}
+                variants={{
+                  hidden: { opacity: 0, y: 50 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                style={{
+                  transform: `rotate(${Math.random() * 20 - 10}deg)`,
+                }}
+                className={`relative ${
+                  selectedCards.includes(index + 11) ? "opacity-50" : ""
+                }`}
+              >
+                <TarotCard
+                  card={card}
+                  isFlipped={flippedCards.includes(index + 11)}
+                  onClick={() => handleCardClick(index + 11)}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
         ) : (
           <>
             <motion.div
@@ -219,6 +280,9 @@ export const TarotReading = () => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.2 }}
+                        style={{
+                          transform: getRandomRotation(),
+                        }}
                         className="text-left bg-white/5 p-6 rounded-lg"
                       >
                         <h3 className="text-xl font-bold text-purple-200 mb-2">
